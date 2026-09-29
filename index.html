@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>历史通关棋 · 中国历史大通关</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 顶部栏 -->
+  <header class="topbar">
+    <div class="title">历史通关棋<span class="seal">上下五千年</span></div>
+    <div class="tools">
+      <span id="room-badge" class="room-badge hidden"></span>
+      <button id="sound-btn" class="icon-btn" title="静音">🔊</button>
+      <button id="back-menu" class="icon-btn" title="返回菜单">🏠</button>
+    </div>
+  </header>
+
+  <!-- 主菜单 -->
+  <section id="menu" class="menu">
+    <div class="logo"><div class="big-seal">历史<br>通关棋</div></div>
+    <h1>中国历史大通关</h1>
+    <p class="slogan">沿时光长河掷骰前行，答题闯关，学遍上下五千年</p>
+    <div class="menu-btns">
+      <button id="btn-solo" class="btn">🎲 单人模式（对战电脑）</button>
+      <button id="btn-online" class="btn gold">🌐 联机对战（2-4人）</button>
+    </div>
+  </section>
+
+  <!-- 单人设置 -->
+  <section id="solo-setup" class="menu hidden">
+    <h1 style="color:var(--red-dk)">单人模式</h1>
+    <div style="width:min(340px,90vw)">
+      <div class="label">你的名字</div>
+      <input id="solo-name" class="field" placeholder="输入名字" maxlength="6">
+      <div class="label">电脑对手难度</div>
+      <div id="diff-row" class="diff-row">
+        <button data-d="easy">简单</button>
+        <button data-d="normal" class="active">普通</button>
+        <button data-d="hard">困难</button>
+      </div>
+      <button id="start-solo-btn" class="btn" style="width:100%;margin-top:1em">开始游戏</button>
+      <button id="solo-back" class="btn ghost" style="width:100%;margin-top:.6em">返回</button>
+    </div>
+  </section>
+
+  <!-- 联机设置 -->
+  <section id="online-setup" class="menu hidden">
+    <h1 style="color:var(--red-dk)">联机对战</h1>
+    <div style="width:min(340px,90vw)">
+      <div class="label">你的名字</div>
+      <input id="online-name" class="field" placeholder="输入名字" maxlength="6">
+      <button id="online-create-btn" class="btn" style="width:100%;margin-top:1em">➕ 创建房间</button>
+      <div class="label" style="margin-top:1.2em">或输入房间号加入</div>
+      <input id="online-code" class="field" placeholder="房间号，如 ABC123" maxlength="6" style="text-transform:uppercase">
+      <button id="online-join-btn" class="btn gold" style="width:100%;margin-top:.6em">🚪 加入房间</button>
+      <button id="online-back" class="btn ghost" style="width:100%;margin-top:.6em">返回</button>
+    </div>
+  </section>
+
+  <!-- 房间大厅 -->
+  <section id="lobby" class="menu hidden">
+    <h1 style="color:var(--red-dk)">等待玩家加入</h1>
+    <div class="room-box">
+      <div style="color:#8a6a40">房间号</div>
+      <div id="room-code-display" class="room-code">------</div>
+      <div id="lobby-count" style="color:#8a6a40">0/4 人</div>
+    </div>
+    <div class="wait-list" id="wait-list" style="width:min(340px,90vw)"></div>
+    <button id="lobby-start" class="btn" style="width:min(340px,90vw)">🚀 开始游戏</button>
+    <button id="lobby-leave" class="btn ghost" style="width:min(340px,90vw);margin-top:.6em">退出房间</button>
+  </section>
+
+  <!-- 游戏区 -->
+  <section id="game" class="play-area hidden">
+    <div id="players-row" class="players-row"></div>
+    <div class="board-wrap">
+      <div id="board" class="board"></div>
+    </div>
+    <div class="console">
+      <div class="dice-area">
+        <div id="dice" class="dice">🎲</div>
+        <div style="text-align:left">
+          <div id="turn-hint" class="turn-hint">准备开始</div>
+          <button id="roll-btn" class="btn" style="margin-top:.5em">🎲 掷骰子</button>
+        </div>
+      </div>
+      <div id="log" class="log"></div>
+    </div>
+  </section>
+
+  <!-- 答题弹窗 -->
+  <div id="q-modal" class="modal-mask hidden">
+    <div class="modal">
+      <div class="scroll-top"></div>
+      <h3><span id="q-dynasty" class="q-dynasty"></span> <span id="dungeon-hint" style="font-size:.8rem;color:#8a6a40"></span></h3>
+      <div id="q-text" class="q-text"></div>
+      <div class="timer-bar"><div id="timer-fill" class="timer-fill" style="width:100%"></div></div>
+      <div id="options" class="options"></div>
+      <div id="explain" class="explain hidden"></div>
+      <div id="buzz-panel" class="hidden" style="margin-top:.8em">
+        <button id="buzz-btn" class="buzz-btn">🔔 抢答！</button>
+      </div>
+      <div id="answer-panel" class="hidden"></div>
+    </div>
+  </div>
+
+  <!-- 技能卡弹窗 -->
+  <div id="skill-modal" class="modal-mask hidden">
+    <div class="modal skill-card">
+      <div class="scroll-top"></div>
+      <div style="font-size:2.2rem">🎴</div>
+      <div id="skill-name" class="sc-name">技能卡</div>
+      <div id="skill-desc" class="sc-desc"></div>
+      <button class="btn" style="width:100%">确定</button>
+    </div>
+  </div>
+
+  <!-- 胜利弹窗 -->
+  <div id="win-modal" class="modal-mask hidden">
+    <div class="modal">
+      <div class="scroll-top"></div>
+      <div class="win-title">🏆 游戏结束</div>
+      <div id="rank-list" class="rank-list"></div>
+      <button id="win-close" class="btn" style="width:100%">👏 太棒了</button>
+      <button id="replay-btn" class="btn ghost" style="width:100%;margin-top:.6em">🔄 再来一局</button>
+    </div>
+  </div>
+
+  <!-- 数据 -->
+  <script src="data-board.js"></script>
+  <script src="data-skills.js"></script>
+  <script src="data-questions-1.js"></script>
+  <script src="data-questions-2.js"></script>
+  <script src="data-questions-3.js"></script>
+  <script src="data-questions-4.js"></script>
+  <script src="data-questions-5.js"></script>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- 游戏 -->
+  <script src="app.js"></script>
+  <script src="multiplayer.js"></script>
+</body>
+</html>
