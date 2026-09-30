@@ -215,7 +215,11 @@ function beginGame() {
   G.finishedCount = 0;
   G.winner = null;
   $("#menu").classList.add("hidden");
+  $("#solo-setup").classList.add("hidden");
+  $("#online-setup").classList.add("hidden");
+  $("#lobby").classList.add("hidden");
   $("#game").classList.remove("hidden");
+  window.scrollTo(0, 0);
   renderBoard();
   renderPlayers();
   renderLog();
