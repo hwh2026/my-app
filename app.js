@@ -864,6 +864,9 @@ function onlineShowSetup() {}
 // 启动
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
+  // 标记 JS 已成功执行（灰色=没跑起来，绿色=正常）
+  const ver = document.getElementById("ver");
+  if (ver) { ver.textContent = "v2 ✓已就绪"; ver.style.background = "#2f9e63"; }
   bindUI();
   renderBoard();
   renderPlayers();

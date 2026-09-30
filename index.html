@@ -4,13 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>历史通关棋 · 中国历史大通关</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
+  <script>
+    // 早期错误捕获：任何 JS 错误都直接显示在屏幕底部，方便排查
+    function __showErr(msg) {
+      try {
+        var d = document.createElement("div");
+        d.style.cssText = "position:fixed;left:0;right:0;bottom:0;background:#b00020;color:#fff;font-size:12px;padding:8px;z-index:99999;word-break:break-all;white-space:pre-wrap;font-family:monospace";
+        d.textContent = "⚠ 错误: " + msg;
+        (document.body || document.documentElement).appendChild(d);
+      } catch (e) {}
+    }
+    window.addEventListener("error", function (e) {
+      if (e.target && e.target.tagName === "SCRIPT") { __showErr("脚本加载失败: " + e.target.src); }
+      else { __showErr((e.message || e.type) + (e.filename ? " @ " + e.filename + ":" + e.lineno : "")); }
+    }, true);
+    window.addEventListener("unhandledrejection", function (e) {
+      __showErr("Promise错误: " + ((e.reason && e.reason.message) || e.reason));
+    });
+  </script>
 </head>
 <body>
 
   <!-- 顶部栏 -->
   <header class="topbar">
-    <div class="title">历史通关棋<span class="seal">上下五千年</span></div>
+    <div class="title">历史通关棋<span class="seal">上下五千年</span><span id="ver" style="font-size:.62rem;opacity:.85;margin-left:.5em;background:rgba(0,0,0,.2);padding:.1em .5em;border-radius:999px">v2</span></div>
     <div class="tools">
       <span id="room-badge" class="room-badge hidden"></span>
       <button id="sound-btn" class="icon-btn" title="静音">🔊</button>
@@ -130,19 +148,19 @@
   </div>
 
   <!-- 数据 -->
-  <script src="data-board.js"></script>
-  <script src="data-skills.js"></script>
-  <script src="data-questions-1.js"></script>
-  <script src="data-questions-2.js"></script>
-  <script src="data-questions-3.js"></script>
-  <script src="data-questions-4.js"></script>
-  <script src="data-questions-5.js"></script>
+  <script src="data-board.js?v=2"></script>
+  <script src="data-skills.js?v=2"></script>
+  <script src="data-questions-1.js?v=2"></script>
+  <script src="data-questions-2.js?v=2"></script>
+  <script src="data-questions-3.js?v=2"></script>
+  <script src="data-questions-4.js?v=2"></script>
+  <script src="data-questions-5.js?v=2"></script>
 
   <!-- Supabase SDK（本地打包，无需国外 CDN） -->
-  <script src="supabase.min.js"></script>
+  <script src="supabase.min.js?v=2"></script>
 
   <!-- 游戏 -->
-  <script src="app.js"></script>
-  <script src="multiplayer.js"></script>
+  <script src="app.js?v=2"></script>
+  <script src="multiplayer.js?v=2"></script>
 </body>
 </html>
